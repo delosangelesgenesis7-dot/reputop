@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { createClient } from "@/lib/supabase-server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST() {
+  if (!process.env.RESEND_API_KEY) {
+    return NextResponse.json({ error: "Resend no configurado" }, { status: 503 });
+  }
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const supabase = createClient();
 
   const { data: restaurants } = await supabase
