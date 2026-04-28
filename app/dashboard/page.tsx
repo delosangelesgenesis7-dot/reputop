@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Star, Send, Copy, BarChart2, MessageCircle, LogOut, CheckCircle, Users, QrCode, Download, Crown, CreditCard, Settings } from "lucide-react";
 import OnboardingChecklist from "./OnboardingChecklist";
+import { industries } from "@/lib/industries";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
@@ -21,6 +22,7 @@ interface Restaurant {
   plan: string;
   trial_ends_at: string;
   stripe_customer_id?: string;
+  business_type?: string;
 }
 
 interface ReviewRequest {
@@ -121,9 +123,9 @@ export default function DashboardPage() {
       ? `${window.location.origin}/r/${restaurant.slug}?ref=${data.id}`
       : reviewLink;
 
-    const message = encodeURIComponent(
-      `¡Hola! 😊 Fue un placer tenerte en ${restaurant.name}.\n\nSi disfrutaste tu experiencia, nos encantaría que nos dejaras una reseña en Google. ¡Solo toma un momento y significa mucho para nosotros! ⭐\n\n👉 ${trackLink}\n\n¡Te esperamos pronto! 🙌`
-    );
+    const industryKey = restaurant.business_type || "restaurantes";
+    const industryData = industries[industryKey] || industries.restaurantes;
+    const message = encodeURIComponent(industryData.whatsappMessage(restaurant.name, trackLink));
 
     const cleanPhone = phone.replace(/\D/g, "");
     window.open(`https://wa.me/${cleanPhone}?text=${message}`, "_blank");
