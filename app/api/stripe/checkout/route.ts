@@ -3,17 +3,20 @@ import Stripe from "stripe";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2026-04-22.dahlia" });
-
-const PRICES = {
-  basic: process.env.STRIPE_PRICE_BASIC!,
-  pro: process.env.STRIPE_PRICE_PRO!,
-};
-
 export async function POST(req: NextRequest) {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return NextResponse.json({ error: "Stripe no configurado" }, { status: 503 });
+  }
+
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2026-04-22.dahlia" });
+  const PRICES: Record<string, string> = {
+    basic: process.env.STRIPE_PRICE_BASIC || "",
+    pro: process.env.STRIPE_PRICE_PRO || "",
+  };
+
   const { plan } = await req.json();
 
-  if (!PRICES[plan as keyof typeof PRICES]) {
+  if (!PRICES[plan]) {
     return NextResponse.json({ error: "Plan inválido" }, { status: 400 });
   }
 
@@ -54,7 +57,7 @@ export async function POST(req: NextRequest) {
     customer: customerId,
     mode: "subscription",
     payment_method_types: ["card"],
-    line_items: [{ price: PRICES[plan as keyof typeof PRICES], quantity: 1 }],
+    line_items: [{ price: PRICES[plan], quantity: 1 }],
     success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?success=1`,
     cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?cancelled=1`,
     metadata: { restaurant_id: rest.id, plan },
