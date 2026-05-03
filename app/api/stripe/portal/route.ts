@@ -3,9 +3,11 @@ import Stripe from "stripe";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "placeholder", { apiVersion: "2026-04-22.dahlia" });
-
 export async function POST(req: NextRequest) {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return NextResponse.json({ error: "Stripe no configurado" }, { status: 503 });
+  }
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2026-04-22.dahlia" });
   const cookieStore = cookies() as unknown as {
     getAll: () => { name: string; value: string }[];
     set: (name: string, value: string, options?: object) => void;

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase";
 import { Star, Users, TrendingUp, CheckCircle, Clock, LogOut, Lock } from "lucide-react";
 
-const ADMIN_PASSWORD = "Gene.123";
+const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "Gene.123";
 const GOLD = "#C9A84C";
 
 interface Restaurant {

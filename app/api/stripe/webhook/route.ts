@@ -11,7 +11,8 @@ const supabase = createClient(
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
-  const sig = req.headers.get("stripe-signature")!;
+  const sig = req.headers.get("stripe-signature");
+  if (!sig) return NextResponse.json({ error: "Firma faltante" }, { status: 400 });
 
   let event: Stripe.Event;
   try {

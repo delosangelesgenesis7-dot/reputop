@@ -7,7 +7,7 @@ import { industries } from "@/lib/industries";
 const GOLD = "#C9A84C";
 
 export default function IndustryLanding({ industrySlug }: { industrySlug: string }) {
-  const industry = industries[industrySlug];
+  const industry = industries[industrySlug] || industries["restaurantes"];
   return (
     <div className="min-h-screen bg-white">
       {/* Urgency bar */}
