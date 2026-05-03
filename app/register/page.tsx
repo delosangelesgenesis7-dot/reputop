@@ -76,6 +76,18 @@ function RegisterForm() {
         email: form.email,
         business_type: form.businessType,
       });
+
+      // Notificar al admin
+      fetch("/api/notify-register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          businessName: form.businessName,
+          businessType: form.businessType,
+          email: form.email,
+        }),
+      }).catch(() => {});
+
       router.push("/dashboard");
     }
   }
