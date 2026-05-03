@@ -145,4 +145,56 @@ export const industries: Record<string, Industry> = {
     registerSubtitle: "30 días gratis · Sin tarjeta · Para tu gimnasio",
     color: "#F97316",
   },
+
+  minimarket: {
+    slug: "minimarket",
+    name: "minimarket",
+    namePlural: "minimarkets y tiendas",
+    emoji: "🛒",
+    headline: "Más reseñas en Google.\nMás clientes cada día.",
+    subheadline: "Cada cliente que pasa por tu caja es una oportunidad. Envíales un WhatsApp y conviértelos en reseñas de 5 estrellas en Google.",
+    heroStat: "+250%",
+    heroStatLabel: "más reseñas en 30 días",
+    whatsappMessage: (name, link) =>
+      `¡Hola! 🛒 Gracias por comprar en ${name}.\n\nSi quedaste contento con tu compra y nuestro servicio, nos encantaría que nos dejaras una reseña en Google. ¡Solo toma un momento y nos ayuda muchísimo! ⭐\n\n👉 ${link}\n\n¡Hasta la próxima! 😊`,
+    features: [
+      "Envía links por WhatsApp a tus clientes habituales",
+      "Código QR para poner en la caja o mostrador",
+      "Estadísticas de cuántos clientes respondieron",
+      "Historial completo de envíos",
+    ],
+    testimonials: [
+      { name: "Jorge M.", business: "Minimarket Don Jorge", text: "Mis clientes de siempre no sabían que podían dejar reseña. Ahora lo hacen y nuevos clientes llegan por eso." },
+      { name: "Patricia S.", business: "Tienda La Esquina", text: "En 6 semanas pasamos de 8 reseñas a 67. Ahora aparecemos en Google cuando buscan tiendas cerca." },
+    ],
+    registerTitle: "Más visibilidad para tu tienda en Google",
+    registerSubtitle: "30 días gratis · Sin tarjeta · Para tu minimarket o tienda",
+    color: "#10B981",
+  },
+
+  cafeterias: {
+    slug: "cafeterias",
+    name: "cafetería",
+    namePlural: "cafeterías",
+    emoji: "☕",
+    headline: "Más reseñas en Google.\nMás mesas ocupadas.",
+    subheadline: "Convierte cada café en una reseña. Envía un WhatsApp rápido a tus clientes y llévalos directo a Google Maps. Sin complicaciones.",
+    heroStat: "+300%",
+    heroStatLabel: "más reseñas en 30 días",
+    whatsappMessage: (name, link) =>
+      `¡Hola! ☕ Gracias por visitarnos en ${name}.\n\nEsperamos que hayas disfrutado tu experiencia. Si es así, nos encantaría que nos dejaras una reseña en Google. ¡Significa mucho para nuestro equipo! ⭐\n\n👉 ${link}\n\n¡Hasta pronto! 😊`,
+    features: [
+      "Envía links por WhatsApp después de cada visita",
+      "Código QR para poner en la mesa o mostrador",
+      "Estadísticas de conversión en tiempo real",
+      "Historial de todos tus envíos",
+    ],
+    testimonials: [
+      { name: "Isabel R.", business: "Café del Aeropuerto", text: "Los viajeros agradecen el buen servicio y están felices de dejar una reseña. Subimos de 3.9 a 4.8 estrellas." },
+      { name: "Tomás V.", business: "Cafetería Central", text: "Reputop nos ayudó a destacar entre todas las cafeterías de la zona. Ahora somos los primeros en Google." },
+    ],
+    registerTitle: "Haz crecer tu cafetería con más reseñas",
+    registerSubtitle: "30 días gratis · Sin tarjeta · Para tu cafetería",
+    color: "#92400E",
+  },
 };

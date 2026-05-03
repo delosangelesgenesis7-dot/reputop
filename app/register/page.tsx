@@ -11,8 +11,10 @@ const GOLD = "#C9A84C";
 
 const BUSINESS_TYPES = [
   { value: "restaurantes", label: "🍽️ Restaurante" },
+  { value: "bares", label: "🍹 Bar / Bar-Restaurante / Nocturno" },
+  { value: "cafeterias", label: "☕ Cafetería" },
   { value: "salones", label: "💇‍♀️ Salón de belleza" },
-  { value: "bares", label: "🍹 Bar / Discoteca" },
+  { value: "minimarket", label: "🛒 Minimarket / Tienda" },
   { value: "clinicas", label: "🏥 Clínica / Consultorio" },
   { value: "gimnasios", label: "💪 Gimnasio" },
   { value: "otro", label: "🏪 Otro negocio" },
