@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { redirect } from "next/navigation";
+import ReviewInterstitial from "./ReviewInterstitial";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -36,5 +36,17 @@ export default async function ReviewRedirectPage({ params, searchParams }: Props
       .eq("id", ref);
   }
 
-  redirect(restaurant.google_url);
+  // Construir URL directa a reseñas
+  let reviewUrl = restaurant.google_url;
+  // Si es una URL de maps.app.goo.gl o maps.google.com, añadir parámetro de reseña
+  if (reviewUrl.includes("maps.app.goo.gl") || reviewUrl.includes("g.page")) {
+    reviewUrl = reviewUrl + (reviewUrl.includes("?") ? "&" : "?") + "hl=es";
+  }
+
+  return (
+    <ReviewInterstitial
+      restaurantName={restaurant.name}
+      googleUrl={reviewUrl}
+    />
+  );
 }
