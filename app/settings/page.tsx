@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Star, CheckCircle, ArrowLeft, Store, Link2, Mail, Save } from "lucide-react";
+import { Star, CheckCircle, ArrowLeft, Store, Link2, Mail, Save, Lock, Eye, EyeOff } from "lucide-react";
 import { createClient } from "@/lib/supabase";
 import Link from "next/link";
 
@@ -19,6 +19,11 @@ export default function SettingsPage() {
   const [name, setName] = useState("");
   const [googleUrl, setGoogleUrl] = useState("");
   const [email, setEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordSaved, setPasswordSaved] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
+  const [savingPassword, setSavingPassword] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -66,6 +71,23 @@ export default function SettingsPage() {
       setTimeout(() => setSaved(false), 3000);
     }
     setSaving(false);
+  }
+
+  async function handleChangePassword(e: React.FormEvent) {
+    e.preventDefault();
+    if (newPassword.length < 6) { setPasswordError("Mínimo 6 caracteres."); return; }
+    setSavingPassword(true);
+    setPasswordError("");
+    const supabase = createClient();
+    const { error: err } = await supabase.auth.updateUser({ password: newPassword });
+    if (err) {
+      setPasswordError("Error al cambiar la contraseña. Intenta de nuevo.");
+    } else {
+      setPasswordSaved(true);
+      setNewPassword("");
+      setTimeout(() => setPasswordSaved(false), 3000);
+    }
+    setSavingPassword(false);
   }
 
   if (loading) {
@@ -161,9 +183,7 @@ export default function SettingsPage() {
             />
           </div>
 
-          {error && (
-            <p className="text-red-500 text-sm px-1">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm px-1">{error}</p>}
 
           <button
             type="submit"
@@ -171,10 +191,46 @@ export default function SettingsPage() {
             className="flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-60"
             style={{ background: "linear-gradient(135deg, #C9A84C, #A07830)" }}
           >
-            {saved
-              ? <><CheckCircle className="w-4 h-4" /> ¡Guardado!</>
-              : <><Save className="w-4 h-4" /> {saving ? "Guardando..." : "Guardar cambios"}</>
-            }
+            {saved ? <><CheckCircle className="w-4 h-4" /> ¡Guardado!</> : <><Save className="w-4 h-4" /> {saving ? "Guardando..." : "Guardar cambios"}</>}
+          </button>
+        </form>
+
+        {/* Cambiar contraseña */}
+        <form onSubmit={handleChangePassword} className="flex flex-col gap-5 mt-5">
+          <div className="bg-white rounded-2xl border border-gray-100 p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "#FDFBF5", border: "1px solid #E8D5A3" }}>
+                <Lock className="w-4 h-4" style={{ color: GOLD }} />
+              </div>
+              <div>
+                <h2 className="font-semibold text-gray-900 text-sm">Cambiar contraseña</h2>
+                <p className="text-xs text-gray-400">Escribe una nueva contraseña para tu cuenta</p>
+              </div>
+            </div>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Nueva contraseña (mínimo 6 caracteres)"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm text-gray-900 placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:border-transparent"
+                style={{ "--tw-ring-color": GOLD } as React.CSSProperties}
+              />
+              <button type="button" onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
+            {passwordError && <p className="text-red-500 text-xs mt-2">{passwordError}</p>}
+          </div>
+
+          <button
+            type="submit"
+            disabled={savingPassword || !newPassword}
+            className="flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-60"
+            style={{ background: "linear-gradient(135deg, #6b7280, #4b5563)" }}
+          >
+            {passwordSaved ? <><CheckCircle className="w-4 h-4" /> ¡Contraseña actualizada!</> : <><Lock className="w-4 h-4" /> {savingPassword ? "Guardando..." : "Cambiar contraseña"}</>}
           </button>
         </form>
       </main>
