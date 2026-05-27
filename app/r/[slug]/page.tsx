@@ -21,7 +21,7 @@ export default async function ReviewRedirectPage({ params, searchParams }: Props
   if (!restaurant) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <p className="text-gray-400">Restaurante no encontrado.</p>
+        <p className="text-gray-400">Negocio no encontrado.</p>
       </div>
     );
   }
