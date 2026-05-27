@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase-server";
+import { createClient } from "@supabase/supabase-js";
 import ReviewInterstitial from "./ReviewInterstitial";
 
 interface Props {
@@ -10,7 +10,10 @@ export default async function ReviewRedirectPage({ params, searchParams }: Props
   const { slug } = await params;
   const { ref } = await searchParams;
 
-  const supabase = createClient();
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
 
   const { data: restaurant } = await supabase
     .from("restaurants")
