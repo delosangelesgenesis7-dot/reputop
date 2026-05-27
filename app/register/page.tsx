@@ -69,12 +69,20 @@ function RegisterForm() {
     }
 
     if (data.user) {
+      const slug = form.businessName
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "") +
+        "-" + Math.random().toString(36).substring(2, 7);
+
       await supabase.from("restaurants").insert({
         user_id: data.user.id,
         name: form.businessName,
         google_url: form.googleUrl,
         email: form.email,
         business_type: form.businessType,
+        slug,
       });
 
       // Notificar al admin
