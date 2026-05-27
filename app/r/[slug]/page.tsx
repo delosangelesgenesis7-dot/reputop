@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import ReviewInterstitial from "./ReviewInterstitial";
+import { redirect } from "next/navigation";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -36,10 +36,5 @@ export default async function ReviewRedirectPage({ params, searchParams }: Props
       .eq("id", ref);
   }
 
-  return (
-    <ReviewInterstitial
-      restaurantName={restaurant.name}
-      googleUrl={restaurant.google_url}
-    />
-  );
+  redirect(restaurant.google_url);
 }
