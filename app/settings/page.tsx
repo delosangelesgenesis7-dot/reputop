@@ -115,7 +115,7 @@ export default function SettingsPage() {
       <main className="max-w-2xl mx-auto px-6 py-10">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Configuración</h1>
-          <p className="text-gray-400 text-sm mt-1">Actualiza la información de tu restaurante</p>
+          <p className="text-gray-400 text-sm mt-1">Actualiza la información de tu negocio</p>
         </div>
 
         <form onSubmit={handleSave} className="flex flex-col gap-5">
@@ -126,7 +126,7 @@ export default function SettingsPage() {
                 <Store className="w-4 h-4" style={{ color: GOLD }} />
               </div>
               <div>
-                <h2 className="font-semibold text-gray-900 text-sm">Nombre del restaurante</h2>
+                <h2 className="font-semibold text-gray-900 text-sm">Nombre del negocio</h2>
                 <p className="text-xs text-gray-400">Aparece en el mensaje de WhatsApp</p>
               </div>
             </div>
@@ -160,7 +160,7 @@ export default function SettingsPage() {
               style={{ "--tw-ring-color": GOLD } as React.CSSProperties}
             />
             <p className="text-xs text-gray-400 mt-2">
-              En Google Maps, busca tu restaurante → comparte → copia el link corto.
+              En Google Maps, busca tu negocio → comparte → copia el link corto.
             </p>
           </div>
 

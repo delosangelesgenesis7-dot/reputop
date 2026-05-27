@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Reputop — Más reseñas para tu restaurante",
+  title: "Reputop — Más reseñas para tu negocio",
   description: "Consigue más reseñas en Google Maps de forma automática y profesional.",
 };
 
